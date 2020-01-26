@@ -1,7 +1,10 @@
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
-           https://api.github.com/users/<your name>
+           https://api.github.com/users/wolfaholic
 */
+const axiosPromise = axios.get("https://api.github.com/users/wolfaholic");
+console.log(axiosPromise);
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -13,9 +16,21 @@
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+function gitCard (username, location, profile, followers, following, bio, imgsrc)
+const newCard = document.createElement("div");
+const gitUsername = document.createElement('h2');
+const userLocation = document.createElement('p');
+const profileUrl = document.createElement('a');
+const userFollowers = document.createElement('p');
+const userFollowing = document.createElement('p');
+const userBio = document.createElement('p');
+const userAvatar = document.createElement('img')
+
+
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          follow this link in your browser https://api.github.com/users/Wolfaholic/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
           Individual strings to the friendsArray below.
