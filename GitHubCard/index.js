@@ -2,8 +2,14 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/wolfaholic
 */
-const axiosPromise = axios.get("https://api.github.com/users/wolfaholic");
-console.log(axiosPromise);
+axios.get("https://api.github.com/users/wolfaholic")
+.then(response => {
+  console.log(response);
+})
+.catch(error => {
+  console.log("the data was not returned", error);
+})
+ 
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -16,16 +22,49 @@ console.log(axiosPromise);
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
-function gitCard (username, location, profile, followers, following, bio, imgsrc)
-const newCard = document.createElement("div");
-const gitUsername = document.createElement('h2');
-const userLocation = document.createElement('p');
-const profileUrl = document.createElement('a');
-const userFollowers = document.createElement('p');
-const userFollowing = document.createElement('p');
-const userBio = document.createElement('p');
-const userAvatar = document.createElement('img')
+function cardCreator(profileInfo) {
 
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const userName = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileLink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  userName.classList.add('userName')
+
+  card.appendChild(img)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(profileLink)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  img.src = profileInfo.avatar_url
+  location.textContent = profileInfo.location
+  name.textContent = profileInfo.name
+  userName.textContent = profileInfo.login
+  const theProfileLink = `URL: ${profileInfo.url}`
+  profileLink.innerHTML = theProfileLink.link(profileInfo.url)
+  followers.textContent = `Followers: ${profileInfo.followers}`
+  following.textContent = `Following: ${profileInfo.following}`
+  bio.textContent = `BIO: ${profileInfo.bio}`
+
+  return card
+
+}
 
 
 
@@ -39,7 +78,22 @@ const userAvatar = document.createElement('img')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'eaczechova',
+  'kmilliner888',
+  'BFlorence28',
+  'marksayers46',
+  'flowersfaerie',
+];
+
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+    .then (data => {
+      const card = cardCreator(data.data)
+      const cards = document.querySelector('.cards')
+      cards.appendChild(card)
+    })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
